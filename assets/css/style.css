@@ -1,0 +1,413 @@
+/* Persian RTL mirror of "LazyVim for Ambitious Developers" — original design by Dusty Phillips.
+   Persian translation site: translator Mehdi Khadem (مهدی خادم). */
+
+:root {
+  --brown-900: #7c2d12;
+  --brown-700: #b45309;
+  --brown-600: #c2410c;
+  --peach-100: #ffedd5;
+  --peach-200: #fed7aa;
+  --sidebar-bg: #f1f3f5;
+  --sidebar-border: #e9ecef;
+  --content-bg: #ffffff;
+  --page-bg: #ffffff;
+  --text: #212529;
+  --muted: #5c6770;
+  --code-bg: #f1f3f5;
+  --code-border: #e2e5e9;
+  --link: #b45309;
+  --heading-underline: #bcd8f5;
+  --radius: 14px;
+}
+
+* { box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--page-bg);
+  color: var(--text);
+  font-family: "Vazirmatn", "IRANSans", "B Nazanin", Tahoma, Arial, sans-serif;
+  line-height: 2;
+  font-size: 1.02rem;
+}
+
+/* ---------- layout ---------- */
+.container {
+  display: flex;
+  align-items: flex-start;
+  gap: 2rem;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 1.2rem 1.4rem 3rem;
+}
+
+.hamburger {
+  display: none;
+  position: sticky;
+  top: 0.6rem;
+  z-index: 40;
+  margin-bottom: 0.6rem;
+  border: 1px solid var(--sidebar-border);
+  background: var(--sidebar-bg);
+  color: var(--brown-700);
+  font-family: inherit;
+  font-weight: 700;
+  border-radius: 10px;
+  padding: 0.5rem 0.9rem;
+  cursor: pointer;
+}
+
+/* sidebar comes first in DOM; in RTL it renders on the right */
+nav.sidebar {
+  flex: 0 0 300px;
+  position: sticky;
+  top: 1rem;
+  max-height: calc(100vh - 2rem);
+  overflow-y: auto;
+  background: var(--sidebar-bg);
+  border: 1px solid var(--sidebar-border);
+  border-radius: var(--radius);
+  padding: 1.1rem 1rem 1.4rem;
+  font-size: 0.95rem;
+  line-height: 1.9;
+}
+
+nav.sidebar h1 {
+  color: var(--brown-700);
+  font-size: 1.25rem;
+  line-height: 1.8;
+  text-align: center;
+  margin: 0.2rem 0 0.8rem;
+}
+
+nav.sidebar h2 {
+  font-size: 1rem;
+  color: var(--text);
+  margin: 1.1rem 0 0.4rem;
+}
+
+nav.sidebar ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+nav.sidebar li { margin: 0; padding: 0; }
+
+nav.sidebar a {
+  color: var(--link);
+  text-decoration: none;
+  display: block;
+  padding: 0.28rem 0.6rem;
+  border-radius: 8px;
+}
+
+nav.sidebar a:hover { text-decoration: underline; background: #e9ecef; }
+
+nav.sidebar a.active {
+  background: var(--peach-100);
+  font-weight: 700;
+}
+
+nav.sidebar .chap-num { font-weight: 400; }
+nav.sidebar .chap-title { font-weight: 700; }
+
+.toc-search {
+  width: 100%;
+  font-family: inherit;
+  border: 1px solid var(--sidebar-border);
+  border-radius: 8px;
+  padding: 0.45rem 0.7rem;
+  margin: 0.5rem 0 0.2rem;
+  background: #fff;
+}
+
+/* ---------- content ---------- */
+.content { flex: 1 1 auto; min-width: 0; }
+.content main { min-width: 0; }
+.prose { max-width: 820px; }
+
+.prose h1, .content h1 {
+  color: var(--brown-700);
+  font-size: 2rem;
+  line-height: 1.7;
+  margin: 0.4rem 0 1rem;
+}
+
+.prose h2 {
+  color: var(--brown-700);
+  font-size: 1.5rem;
+  margin: 2rem 0 0.8rem;
+  line-height: 1.8;
+}
+
+.prose h3 {
+  color: var(--brown-700);
+  font-size: 1.2rem;
+  border-bottom: 5px solid var(--heading-underline);
+  display: inline-block;
+  padding-bottom: 2px;
+  margin: 1.8rem 0 0.7rem;
+  line-height: 1.9;
+}
+
+.prose h4 { color: var(--brown-900); margin: 1.4rem 0 0.5rem; }
+
+.prose p { margin: 0.9rem 0; }
+
+.prose a { color: var(--link); }
+.prose a:hover { color: var(--brown-900); }
+
+/* code: always LTR */
+code, kbd, pre {
+  font-family: "JetBrains Mono", "Fira Code", Consolas, Menlo, monospace;
+  direction: ltr;
+  unicode-bidi: embed;
+}
+
+.prose :not(pre) > code {
+  background: var(--code-bg);
+  border: 1px solid var(--code-border);
+  border-radius: 6px;
+  padding: 0.05em 0.4em;
+  font-size: 0.86em;
+  white-space: nowrap;
+}
+
+.prose pre {
+  background: #f8f9fa;
+  border: 1px solid var(--code-border);
+  border-radius: 10px;
+  padding: 1rem 1.1rem;
+  overflow-x: auto;
+  line-height: 1.7;
+  font-size: 0.86rem;
+  position: relative;
+}
+
+.prose pre code {
+  background: none;
+  border: none;
+  padding: 0;
+  white-space: pre;
+}
+
+.copy-btn {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  font-family: inherit;
+  font-size: 0.75rem;
+  border: 1px solid var(--code-border);
+  background: #fff;
+  border-radius: 6px;
+  padding: 0.1rem 0.55rem;
+  cursor: pointer;
+  color: var(--muted);
+}
+
+/* tables */
+.prose table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 1.2rem 0;
+  font-size: 0.92rem;
+  line-height: 1.9;
+  display: block;
+  overflow-x: auto;
+}
+
+.prose th, .prose td {
+  border: 1px solid #dee2e6;
+  padding: 0.5rem 0.8rem;
+  vertical-align: top;
+}
+
+/* admonition-style single-row tables (empty header) become note boxes */
+.prose table.note {
+  border: none;
+  border-right: 4px solid var(--peach-200);
+  background: #fffbf5;
+  border-radius: 0 10px 10px 0;
+  display: table;
+}
+
+.prose table.note td:first-child { display: none; }
+.prose table.note td { border: none; }
+
+/* blockquote */
+.prose blockquote {
+  border-right: 4px solid var(--peach-200);
+  background: #fffbf5;
+  margin: 1.2rem 0;
+  padding: 0.6rem 1.1rem;
+  border-radius: 0 10px 10px 0;
+  color: #3a3a3a;
+}
+
+/* images */
+.prose img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 1rem auto;
+  border-radius: 10px;
+  box-shadow: 0 2px 14px rgba(0, 0, 0, 0.12);
+}
+
+/* lists */
+.prose ul, .prose ol { padding-right: 1.4rem; }
+.prose li { margin: 0.3rem 0; }
+.prose li::marker { color: var(--brown-700); }
+
+/* credit / notice boxes */
+.notice {
+  border: 1px solid var(--peach-200);
+  background: #fff7ed;
+  border-radius: 12px;
+  padding: 0.9rem 1.2rem;
+  margin: 1.4rem 0;
+  font-size: 0.95rem;
+}
+
+.notice.translator {
+  border-color: #bcd8f5;
+  background: #f0f7ff;
+}
+
+.notice h3, .notice h4 { margin-top: 0.2rem; }
+
+/* prev / next */
+.pager {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin: 2.5rem 0 1rem;
+  flex-wrap: wrap;
+}
+
+.pager a {
+  border: 1px solid var(--sidebar-border);
+  background: var(--sidebar-bg);
+  color: var(--brown-700);
+  font-weight: 700;
+  text-decoration: none;
+  border-radius: 10px;
+  padding: 0.6rem 1.1rem;
+  max-width: 48%;
+}
+
+.pager a:hover { background: var(--peach-100); }
+
+/* footer */
+footer.site-footer {
+  border-top: 1px solid var(--sidebar-border);
+  margin-top: 2.5rem;
+  padding-top: 1rem;
+  color: var(--muted);
+  font-size: 0.86rem;
+  line-height: 2;
+}
+
+/* ---------- landing page ---------- */
+.landing { max-width: 900px; margin: 0 auto; padding: 1rem 1.2rem 3rem; }
+.landing header { text-align: center; }
+.landing h1 { color: var(--brown-700); font-size: 2.2rem; margin: 0.6rem 0 0; line-height: 1.8; }
+.landing h2.subtitle { font-weight: 400; font-size: 1.2rem; color: var(--text); margin: 0 0 1.4rem; }
+
+.card-container {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  align-items: stretch;
+  flex-wrap: wrap;
+  margin: 1rem 0 1.6rem;
+}
+
+.card {
+  background: var(--sidebar-bg);
+  border: 1px solid var(--sidebar-border);
+  border-radius: var(--radius);
+  padding: 1rem 1.3rem;
+  min-width: 150px;
+  flex: 1 1 150px;
+  max-width: 220px;
+  text-align: center;
+}
+
+.card h3 { color: var(--brown-700); margin: 0.3rem 0; }
+.card p { margin: 0.2rem 0; color: var(--muted); }
+
+.cover-box {
+  text-align: center;
+  background: #2b2118;
+  color: #f5e8d5;
+  border-radius: var(--radius);
+  padding: 2rem 1.5rem;
+  max-width: 340px;
+}
+
+.cover-box .vim-logo { font-size: 2.4rem; font-weight: 800; color: #7dd87d; }
+.cover-box .book-title { font-size: 1.3rem; font-weight: 800; margin: 0.5rem 0; line-height: 2; }
+.cover-box .book-sub { font-size: 0.95rem; opacity: 0.85; }
+
+.cta { display: flex; gap: 0.9rem; justify-content: center; margin: 1.4rem 0; flex-wrap: wrap; }
+
+.btn {
+  background: var(--brown-700);
+  color: #fff !important;
+  text-decoration: none;
+  font-weight: 700;
+  border-radius: 10px;
+  padding: 0.65rem 1.5rem;
+  display: inline-block;
+}
+
+.btn.secondary { background: #fff; color: var(--brown-700) !important; border: 2px solid var(--brown-700); }
+.btn:hover { filter: brightness(1.08); }
+
+.landing section.content { max-width: 760px; margin: 0 auto; }
+.landing section.content h2 { color: var(--text); border-bottom: 2px solid var(--sidebar-border); padding-bottom: 0.3rem; }
+
+/* top mini-nav on landing */
+.topnav {
+  display: flex;
+  gap: 0.6rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin: 0.8rem 0;
+}
+
+.topnav a {
+  color: var(--brown-700);
+  text-decoration: none;
+  border: 1px solid var(--sidebar-border);
+  background: var(--sidebar-bg);
+  padding: 0.3rem 0.9rem;
+  border-radius: 999px;
+  font-size: 0.9rem;
+}
+
+/* ---------- responsive ---------- */
+@media (max-width: 900px) {
+  .container { flex-direction: column; }
+  .hamburger { display: inline-block; }
+  nav.sidebar {
+    position: static;
+    flex: none;
+    width: 100%;
+    max-height: none;
+    display: none;
+  }
+  nav.sidebar.open { display: block; }
+  .pager a { max-width: 100%; width: 100%; text-align: center; }
+}
+
+@media print {
+  nav.sidebar, .hamburger, .pager, .copy-btn { display: none !important; }
+  body { font-size: 11pt; }
+}
